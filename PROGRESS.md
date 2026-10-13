@@ -10,7 +10,8 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 - Try them: `try-mods.cmd` (all four) or `try-mods.cmd <mod>`; nothing is installed.
 - Checked live on 2026-10-13: a fresh `try-mods.cmd` session drew the gauges (KI, STAMINA 5h, TRAINING 7d,
   ZENI, `[ Hide (back: /gauges) ]`), the saiyan status line and the mini bars on the prompt-hint line.
-  Not yet seen live: the Kamehameha charge/beam, `/scouter`, `/shenron`, `/dbztheme`, Dragon Ball finds.
+  Later also live: Shenron's coil above the gauges and his tail on the hint line; the user found and
+  `/grab`bed 4 Dragon Balls. Not yet seen live by me: the Kamehameha charge/beam, `/scouter`, `/shenron`, `/dbztheme`.
 - Not installed anywhere; local git history, no GitHub (user's choice).
 
 ## Log

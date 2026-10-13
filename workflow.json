@@ -5,37 +5,127 @@
     {
       "title": "First build with a nodeterm team",
       "date": "2026-10-13",
-      "summary": "A lead and five stations built four DBZ mods (kamehameha, scouter, saiyan-status, shenron) and shared color schemes; the lead added power gauges and the /gauges fix.",
+      "summary": "A lead and five stations built four DBZ mods (kamehameha, scouter, saiyan-status, shenron) and shared color schemes; the lead then added power gauges, the /gauges and mid-turn /grab fixes, and Shenron around the prompt.",
       "stages": [
-        {"name": "Lead: briefs", "kind": "lead", "note": "specs/THEME.md, COMMON.md, one brief per mod",
-         "sessions": [
-          {"id": "99f66f20", "role": "Orchestrator", "start": "2026-10-13T14:13", "end": "2026-10-13T17:08",
-           "did": "Wrote briefs, built the power gauges and hint bars, fixed goku warn and Hide (/gauges), checked try-mods.cmd live", "outcome": "done", "files": 20}]},
-        {"name": "Round 1 builders", "kind": "build",
-         "sessions": [
-          {"id": "3fef8927", "role": "Kamehameha", "start": "2026-10-13T14:17", "end": "2026-10-13T14:28",
-           "did": "Charge band, beam, summary, Ki gauge; 7 tests", "outcome": "done", "files": 9},
-          {"id": "a8c9e181", "role": "Scouter", "start": "2026-10-13T14:17", "end": "2026-10-13T14:27",
-           "did": "/scouter pane, OVER 9000 toast, stamina alerts; 7 tests", "outcome": "done", "files": 8},
-          {"id": "bda0f5b4", "role": "Saiyan-Status", "start": "2026-10-13T14:17", "end": "2026-10-13T14:28",
-           "did": "Status line, transformations, /senzu, Dragon Balls (later moved to shenron); 16 tests", "outcome": "done", "files": 7}]},
-        {"name": "Round 2 builders", "kind": "build", "note": "after the user asked for color schemes and Shenron",
-         "sessions": [
-          {"id": "d8361d6e", "role": "Palettes", "start": "2026-10-13T14:57", "end": "2026-10-13T15:04",
-           "did": "Shared palette in three mods, removed saiyan Dragon Balls, flagged the goku warn color", "outcome": "done", "files": 15},
-          {"id": "bb70fba2", "role": "Shenron", "start": "2026-10-13T14:57", "end": "2026-10-13T16:13",
-           "did": "Dragon Balls, /grab, /dragonradar, /shenron art and wishes, /dbztheme; 23 tests", "outcome": "done", "files": 8}]}
+        {
+          "name": "Lead: briefs",
+          "kind": "lead",
+          "note": "specs/THEME.md, COMMON.md, one brief per mod",
+          "sessions": [
+            {
+              "id": "99f66f20",
+              "role": "Orchestrator",
+              "start": "2026-10-13T14:13",
+              "end": "2026-10-13T17:40",
+              "did": "Wrote briefs, built the power gauges and hint bars, fixed goku warn, Hide (/gauges) and mid-turn /grab, added Shenron coiled around the prompt, checked try-mods.cmd live",
+              "outcome": "done",
+              "files": 20
+            }
+          ]
+        },
+        {
+          "name": "Round 1 builders",
+          "kind": "build",
+          "sessions": [
+            {
+              "id": "3fef8927",
+              "role": "Kamehameha",
+              "start": "2026-10-13T14:17",
+              "end": "2026-10-13T14:28",
+              "did": "Charge band, beam, summary, Ki gauge; 7 tests",
+              "outcome": "done",
+              "files": 9
+            },
+            {
+              "id": "a8c9e181",
+              "role": "Scouter",
+              "start": "2026-10-13T14:17",
+              "end": "2026-10-13T14:27",
+              "did": "/scouter pane, OVER 9000 toast, stamina alerts; 7 tests",
+              "outcome": "done",
+              "files": 8
+            },
+            {
+              "id": "bda0f5b4",
+              "role": "Saiyan-Status",
+              "start": "2026-10-13T14:17",
+              "end": "2026-10-13T14:28",
+              "did": "Status line, transformations, /senzu, Dragon Balls (later moved to shenron); 16 tests",
+              "outcome": "done",
+              "files": 7
+            }
+          ]
+        },
+        {
+          "name": "Round 2 builders",
+          "kind": "build",
+          "note": "after the user asked for color schemes and Shenron",
+          "sessions": [
+            {
+              "id": "d8361d6e",
+              "role": "Palettes",
+              "start": "2026-10-13T14:57",
+              "end": "2026-10-13T15:04",
+              "did": "Shared palette in three mods, removed saiyan Dragon Balls, flagged the goku warn color",
+              "outcome": "done",
+              "files": 15
+            },
+            {
+              "id": "bb70fba2",
+              "role": "Shenron",
+              "start": "2026-10-13T14:57",
+              "end": "2026-10-13T16:13",
+              "did": "Dragon Balls, /grab, /dragonradar, /shenron art and wishes, /dbztheme; 23 tests",
+              "outcome": "done",
+              "files": 8
+            }
+          ]
+        },
+        {
+          "name": "Live try-out",
+          "kind": "other",
+          "note": "try-mods.cmd in canvas terminals",
+          "sessions": [
+            {
+              "id": "f7262748",
+              "role": "try-mods.cmd session (Terminal 8)",
+              "start": "2026-10-13T17:07",
+              "end": "2026-10-13T17:34",
+              "did": "Fresh session with all four mods loaded; the lead read its screen: gauges, status line and hint bars drawn",
+              "outcome": "done",
+              "files": 0
+            }
+          ]
+        }
       ],
       "events": [
-        {"at": "2026-10-13T14:44", "text": "User asks for progress bars for usage and context"},
-        {"at": "2026-10-13T14:54", "text": "User asks for color schemes and Shenron with 7 Dragon Balls"},
-        {"at": "2026-10-13T15:07", "text": "User lost the gauges after pressing Hide: /gauges added"}
+        {
+          "at": "2026-10-13T14:44",
+          "text": "User asks for progress bars for usage and context"
+        },
+        {
+          "at": "2026-10-13T14:54",
+          "text": "User asks for color schemes and Shenron with 7 Dragon Balls"
+        },
+        {
+          "at": "2026-10-13T15:07",
+          "text": "User lost the gauges after pressing Hide: /gauges added"
+        },
+        {
+          "at": "2026-10-13T17:12",
+          "text": "User: /grab did nothing while Claude worked: commands made immediate"
+        },
+        {
+          "at": "2026-10-13T17:20",
+          "text": "User asks for Shenron around the terminal border: coil over the prompt band"
+        }
       ],
       "lessons": [
         "spawn-team is refused while the project is off screen: open stations with open-agent --run-now.",
         "A station's headless claude -p shows NEEDS YOU (inherited hook env): a false alarm.",
         "Give stations a reference to check copied data against; Palettes caught a wrong color by reporting it.",
-        "Every hide or close control must say how to bring the thing back."
+        "Every hide or close control must say how to bring the thing back.",
+        "A mod's slash command waits for the turn to end unless registered immediate: anything used mid-turn needs it."
       ]
     }
   ]
