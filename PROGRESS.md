@@ -11,7 +11,7 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 - Checked live on 2026-10-13: a fresh `try-mods.cmd` session drew the gauges (KI, STAMINA 5h, TRAINING 7d,
   ZENI, `[ Hide (back: /gauges) ]`), the saiyan status line and the mini bars on the prompt-hint line.
   Not yet seen live: the Kamehameha charge/beam, `/scouter`, `/shenron`, `/dbztheme`, Dragon Ball finds.
-- Not installed anywhere; no git yet.
+- Not installed anywhere; local git history, no GitHub (user's choice).
 
 ## Log
 ### 2026-10-13: first build (nodeterm team of 5 stations), gauges, Shenron, color schemes
@@ -47,4 +47,4 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 - **Decided against:** custom Claude Code themes (not possible through plugins); Dragon Ball pop-up pane
   below 144 columns (the engine won't seat an unasked pane there, so a toast + `/grab` is used).
 - **Next / open:** user tries every feature live and picks which mods to keep; then maybe install via a
-  marketplace file + `/plugin install`; git/GitHub not decided.
+  marketplace file + `/plugin install`. Git: local history; GitHub: no (user's choice).
