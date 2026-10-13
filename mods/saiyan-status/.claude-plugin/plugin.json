@@ -1,0 +1,39 @@
+{
+  "name": "saiyan-status",
+  "version": "0.1.0",
+  "description": "Dragon Ball Z status line: transformation tier from Ki (context), Stamina, Zeni and Senzu Bean compaction.",
+  "author": { "name": "mAgNiFiCeNtTaCo" },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "statusLine": {
+      "type": "boolean",
+      "title": "Status line",
+      "description": "Show the tier, Ki, Stamina and Zeni line under the prompt.",
+      "default": true
+    },
+    "transformToasts": {
+      "type": "boolean",
+      "title": "Transformation toasts",
+      "description": "Toast when Ki (context fill) crosses into a new tier, up or down.",
+      "default": true
+    },
+    "senzu": {
+      "type": "boolean",
+      "title": "Senzu Bean",
+      "description": "The /senzu command (compacts the conversation) and the 'Senzu Bean is ready' toast at Ki 85%.",
+      "default": true
+    },
+    "autoSenzu": {
+      "type": "boolean",
+      "title": "Auto Senzu",
+      "description": "Compact automatically once Ki reaches 92%, between turns.",
+      "default": false
+    },
+    "staminaWarnings": {
+      "type": "boolean",
+      "title": "Stamina warnings",
+      "description": "Toast when the 5-hour rate-limit window crosses 80% and 90% (off by default: the scouter mod owns this toast).",
+      "default": false
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "shenron",
+  "version": "0.1.0",
+  "description": "Find the seven Dragon Balls while you work, summon Shenron (coiled around the window) and make a wish. Also /dragonradar and /dbztheme, the color scheme switch for every DBZ mod.",
+  "author": { "name": "mAgNiFiCeNtTaCo" },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "palette": {
+      "type": "string",
+      "title": "Color scheme",
+      "description": "DBZ color scheme (also set by /dbztheme).",
+      "default": "goku",
+      "options": ["goku", "vegeta", "namek", "frieza", "super-saiyan-blue", "ultra-instinct", "majin-buu", "kaioken", "golden-frieza", "super-saiyan-rose"]
+    },
+    "findRate": {
+      "type": "string",
+      "title": "Dragon Ball find rate",
+      "description": "How often a Dragon Ball turns up while tools run: rare (1.5% per tool call, sure by 60), normal (3%, sure by 40), frequent (8%, sure by 15).",
+      "default": "normal",
+      "options": ["rare", "normal", "frequent"]
+    },
+    "ballEscape": {
+      "type": "boolean",
+      "title": "Dragon Balls fly away",
+      "description": "A Dragon Ball you don't /grab within 90 seconds flies away. Off: it waits until you grab it.",
+      "default": true
+    },
+    "hintTail": {
+      "type": "boolean",
+      "title": "Dragon Balls under the prompt",
+      "description": "Show your Dragon Balls (🐉 ●●●●○○○) at the end of the hint line under the prompt.",
+      "default": true
+    },
+    "shenronAnimation": {
+      "type": "boolean",
+      "title": "Shenron animation",
+      "description": "While Shenron is summoned, his scales shimmer and his eyes glow and blink.",
+      "default": true
+    }
+  }
+}

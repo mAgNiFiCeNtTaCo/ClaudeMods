@@ -1,0 +1,36 @@
+{
+  "name": "scouter",
+  "version": "0.1.0",
+  "description": "Vegeta's scouter as a side pane: power level, ki (context), stamina and training (rate limits), zeni (cost) and the battle log of this session. Toggle with /scouter.",
+  "author": {
+    "name": "mAgNiFiCeNtTaCo"
+  },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "palette": { "type": "string", "title": "Color scheme", "description": "DBZ color scheme (also set by /dbztheme).", "default": "goku", "options": ["goku", "vegeta", "namek", "frieza", "super-saiyan-blue", "ultra-instinct", "majin-buu", "kaioken", "golden-frieza", "super-saiyan-rose"] },
+    "over9000Toast": {
+      "type": "boolean",
+      "title": "IT'S OVER 9000 toast",
+      "description": "Show a toast the first time this session's power level (total tokens) passes 9000.",
+      "default": true
+    },
+    "staminaAlerts": {
+      "type": "boolean",
+      "title": "Stamina alerts",
+      "description": "Toast when the 5-hour rate-limit window crosses 80% and 90%, once per threshold per window.",
+      "default": true
+    },
+    "showBreakdown": {
+      "type": "boolean",
+      "title": "Ki breakdown",
+      "description": "List the context window by category (system prompt, tools, memory files, messages, free space) under the KI gauge.",
+      "default": true
+    },
+    "autoOpen": {
+      "type": "boolean",
+      "title": "Open at session start",
+      "description": "Open the scouter by itself at session start when the terminal is fullscreen and wide enough to dock it as a sidebar.",
+      "default": false
+    }
+  }
+}

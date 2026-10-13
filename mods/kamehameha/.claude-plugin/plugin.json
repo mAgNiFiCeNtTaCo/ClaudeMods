@@ -1,0 +1,64 @@
+{
+  "name": "kamehameha",
+  "version": "0.1.0",
+  "description": "Dragon Ball Z band above the prompt: every turn charges a Kamehameha, fires a beam when it ends, and shows your Ki (context) gauge.",
+  "author": { "name": "mAgNiFiCeNtTaCo" },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "palette": { "type": "string", "title": "Color scheme", "description": "DBZ color scheme (also set by /dbztheme).", "default": "goku", "options": ["goku", "vegeta", "namek", "frieza", "super-saiyan-blue", "ultra-instinct", "majin-buu", "kaioken", "golden-frieza", "super-saiyan-rose"] },
+    "animate": {
+      "type": "boolean",
+      "title": "Animate",
+      "description": "Shimmer on the charging bar and the beam shooting out (off: static bars).",
+      "default": true
+    },
+    "showKiGauge": {
+      "type": "boolean",
+      "title": "Ki gauge",
+      "description": "Second line: the context window as a Ki gauge.",
+      "default": true
+    },
+    "showSummary": {
+      "type": "boolean",
+      "title": "Last-attack summary",
+      "description": "When idle, a line summing up the last turn (time, techniques, tokens, Ki).",
+      "default": true
+    },
+    "fireBeam": {
+      "type": "boolean",
+      "title": "Fire the beam",
+      "description": "When a turn ends, fire the beam across the band for 4 seconds.",
+      "default": true
+    },
+    "showUsageGauges": {
+      "type": "boolean",
+      "title": "Usage gauges",
+      "description": "Stamina (5h) and Training (7d) usage-limit gauges with reset countdown and a runs-out-at-this-pace warning.",
+      "default": true
+    },
+    "showCacheGauge": {
+      "type": "boolean",
+      "title": "Cache gauge",
+      "description": "How much of the input tokens came from the prompt cache this session.",
+      "default": true
+    },
+    "showZeni": {
+      "type": "boolean",
+      "title": "Zeni (cost)",
+      "description": "Session cost and cost per turn; a gauge when a budget is set.",
+      "default": true
+    },
+    "zeniBudget": {
+      "type": "number",
+      "title": "Zeni budget (USD)",
+      "description": "Session budget in US dollars for the Zeni gauge; 0 shows the cost without a gauge.",
+      "default": 0
+    },
+    "hintBars": {
+      "type": "boolean",
+      "title": "Bars under the prompt",
+      "description": "Mini Ki and usage bars at the end of the hint line under the prompt.",
+      "default": true
+    }
+  }
+}
