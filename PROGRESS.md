@@ -12,7 +12,7 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
   ZENI, `[ Hide (back: /gauges) ]`), the saiyan status line and the mini bars on the prompt-hint line.
   Later also live: Shenron's coil above the gauges and his tail on the hint line; the user found and
   `/grab`bed 4 Dragon Balls. Not yet seen live by me: the Kamehameha charge/beam, `/scouter`, `/shenron`, `/dbztheme`.
-- Not installed anywhere; local git history, no GitHub (user's choice).
+- Not installed anywhere; public on GitHub: https://github.com/mAgNiFiCeNtTaCo/ClaudeMods
 
 ## Log
 ### 2026-10-13: first build (nodeterm team of 5 stations), gauges, Shenron, color schemes
@@ -55,4 +55,4 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 - **Decided against:** custom Claude Code themes (not possible through plugins); Dragon Ball pop-up pane
   below 144 columns (the engine won't seat an unasked pane there, so a toast + `/grab` is used).
 - **Next / open:** user tries every feature live and picks which mods to keep; then maybe install via a
-  marketplace file + `/plugin install`. Git: local history; GitHub: no (user's choice).
+  marketplace file + `/plugin install`. Git: public at https://github.com/mAgNiFiCeNtTaCo/ClaudeMods.
