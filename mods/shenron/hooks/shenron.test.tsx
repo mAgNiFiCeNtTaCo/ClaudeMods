@@ -23,6 +23,7 @@ function world(on: On, store: Record<string, unknown> = {}, rng = '0.1') {
     compacts: 0,
     asked: [] as string[],
     registered: [] as string[],
+    immediate: [] as string[],
   }
   let tip: string | null = 'Read the whole error, mortal. The last line holds the answer.'
   const clock = mock.clock(on, { now: NOW })
@@ -34,6 +35,7 @@ function world(on: On, store: Record<string, unknown> = {}, rng = '0.1') {
   })
   on('command.register', (_$, e) => {
     seen.registered.push(e.name)
+    if (e.immediate === true) seen.immediate.push(e.name)
     return { value: { command: e.name } }
   })
   on('ui.toast', (_$, e) => {
@@ -116,6 +118,8 @@ describe('finding Dragon Balls', () => {
     const w = world(on, { stars: [1, 2, 3] })
     await $.session.start(START)
     expect(w.seen.registered).toEqual(['grab', 'shenron', 'dragonradar', 'dbztheme'])
+    // /grab and /dragonradar run mid-turn; /shenron (wishes compact) and /dbztheme (reloads) wait for idle.
+    expect(w.seen.immediate).toEqual(['grab', 'dragonradar'])
     await techniques($, 14)
     expect(w.seen.toasts).toEqual([])
     await techniques($, 1)

@@ -126,6 +126,7 @@ export const register: Register = (on, options) => {
     await $.command.register({
       name: 'gauges',
       description: 'Show or hide the Kamehameha band and its power gauges.',
+      immediate: true,
     })
     return next(e)
   })

@@ -121,7 +121,8 @@ function ready($: EngineInterface): Promise<void> {
 }
 
 async function setUp($: EngineInterface): Promise<void> {
-  await $.command.register({ name: 'grab', description: 'Grab the Dragon Ball that just appeared' })
+  // immediate: a ball turns up mid-turn, and a queued /grab would wait for the turn to end (it may flee by then).
+  await $.command.register({ name: 'grab', description: 'Grab the Dragon Ball that just appeared', immediate: true })
   await $.command.register({
     name: 'shenron',
     description: 'Summon Shenron with all seven Dragon Balls (/shenron preview: just look at him)',
@@ -130,6 +131,7 @@ async function setUp($: EngineInterface): Promise<void> {
   await $.command.register({
     name: 'dragonradar',
     description: 'Toggle the Dragon Radar: your Dragon Balls, finds and wishes',
+    immediate: true,
   })
   await $.command.register({
     name: 'dbztheme',

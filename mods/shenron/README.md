@@ -30,6 +30,7 @@ After each tool call of the main conversation (subagents don't count), the mod r
   keyboard. On a terminal narrower than 144 columns there is no pane: the toast and `/grab` do the job.
 - Only one ball is out at a time. It is always a star you don't hold yet.
 - `/grab` (or the button) collects it: `Got the 4-Star Dragon Ball! ★★★★☆☆☆ 4/7`.
+  `/grab` works at once even while Claude is still working (so do `/dragonradar`, `/gauges` and `/scouter`).
 - With `ballEscape` on, a ball you don't grab within 90 seconds flies away:
   `The 4-Star Dragon Ball flew away...`.
 - The hint line under the prompt shows your balls, `🐉 ●●●●○○○`. It adds `✨ /grab` while a ball is out

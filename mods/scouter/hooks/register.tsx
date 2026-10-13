@@ -126,6 +126,7 @@ export const register: Register = (on, options) => {
     await $.command.register({
       name: 'scouter',
       description: 'Toggle the Scouter pane: power level, ki, stamina, zeni and the battle log',
+      immediate: true,
     })
     ensureTicker($)
     await refreshUsage($, false)
