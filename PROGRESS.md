@@ -41,6 +41,9 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 - **Fix:** Palettes station flagged goku `warn` as `#ff9a3c`; set back to the original `#ff7a00` everywhere.
 - **Fix:** the user pressed `[ Hide ]` and couldn't get the band back. Added `/gauges` (toggles the band),
   relabelled the button "Hide (back: /gauges)", and hidden resets on session start.
+- **Fix:** `/grab` did nothing while Claude was working: a mod's slash command waits for the turn to end
+  unless registered with `immediate: true`. Now set on `/grab`, `/dragonradar`, `/gauges`, `/scouter`
+  (not `/shenron` or `/dbztheme`: wishes compact and theme switches reload mods).
 - **Decided against:** custom Claude Code themes (not possible through plugins); Dragon Ball pop-up pane
   below 144 columns (the engine won't seat an unasked pane there, so a toast + `/grab` is used).
 - **Next / open:** user tries every feature live and picks which mods to keep; then maybe install via a

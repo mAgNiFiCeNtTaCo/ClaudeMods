@@ -30,6 +30,7 @@ toggleable features, and plain explanations.
 - The plugin API changes per Claude Code release; trust the build's own `claude-code.d.ts`.
 - `$.session.compact()` is refused inside a `command.run` hook: answer, then compact from a timer.
 - Toasts take no color, and a mod's newer toast replaces its older one: join same-moment messages.
+- A mod's slash command typed mid-turn waits for the turn to end unless registered with `immediate: true`.
 - A pane opened unasked only seats at 144+ columns.
 - Plugins can't add Claude Code themes; `/dbztheme` only recolors the DBZ windows.
 - Git Bash rewrites `claude -p "/cmd"` into a path: smoke-test slash commands from PowerShell.
