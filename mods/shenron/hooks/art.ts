@@ -404,3 +404,54 @@ export function frameText(frame: Frame, fill = ' '): string[] {
     return left + fill.repeat(row.hole) + right
   })
 }
+
+/** The narrowest band the prompt coil is drawn in; below it the coil is left out. */
+export const COIL_COLUMNS = 24
+
+/**
+ * Shenron coiled along the top of the band above the prompt: his tail at the left, the body across
+ * with the seven Dragon Ball slots in it (held ones orange), his head at the right. `tall` adds a row
+ * of dorsal spines and antlers above. `tick` >= 0 runs a shine along the scales; -1 draws none.
+ * Every row is exactly `width` cells.
+ */
+export function coilRows(width: number, tick: number, held: readonly number[], isBallOut: boolean, tall: boolean): Seg[][] {
+  const w = Math.max(COIL_COLUMNS, width)
+  const g = blank(w, tall ? 2 : 1)
+  const body = tall ? 1 : 0
+  // Head at the right end: snout facing out, then a whisker, or the Dragon Ball he found.
+  const head = '▓█◉██▙▶'
+  const hx = w - head.length - 2
+  put(g, body, 0, '∽', DRAGON.scale)
+  put(g, body, 1, '≈≈', DRAGON.body)
+  for (let c = 3; c < hx; c += 1) put(g, body, c, c % 2 === 0 ? '▓' : '▒', c % 2 === 0 ? DRAGON.body : DRAGON.scale)
+  put(g, body, hx, head, DRAGON.body)
+  put(g, body, hx + 2, '◉', DRAGON.eye, true)
+  if (isBallOut) put(g, body, hx + head.length, '●', BALL.orange, true)
+  else put(g, body, hx + head.length, '∾', DRAGON.whisker)
+  // The seven Dragon Ball slots, spread along the body.
+  const from = 5
+  const span = hx - 2 - from
+  if (span >= STARS) {
+    for (let i = 0; i < STARS; i += 1) {
+      const c = from + Math.round((i * span) / (STARS - 1))
+      const isHeld = held.includes(i + 1)
+      put(g, body, c, isHeld ? '●' : '○', isHeld ? BALL.orange : DRAGON.belly, isHeld)
+    }
+  }
+  // The shine: two cells of light gliding from tail to head over the scales.
+  if (tick >= 0 && hx > 3) {
+    const at = 3 + (tick % (hx - 3))
+    for (const c of [at, at + 1]) {
+      const cell = g[body]![c]
+      if (cell !== undefined && c < hx && (cell.ch === '▓' || cell.ch === '▒')) g[body]![c] = { ch: cell.ch, color: DRAGON.shine }
+    }
+  }
+  if (tall) {
+    for (let c = 6; c < hx - 1; c += 6) put(g, 0, c, '▴', DRAGON.body)
+    put(g, 0, hx + 1, '╲│╱╲│╱', DRAGON.horn)
+  }
+  return g.map(runs)
+}
+
+/** The dragon's tail under the prompt, before the Dragon Ball count on the hint line. */
+export const COIL_TAIL = '╰≈≈≈∽'

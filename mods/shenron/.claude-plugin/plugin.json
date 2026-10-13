@@ -31,6 +31,12 @@
       "description": "Show your Dragon Balls (🐉 ●●●●○○○) at the end of the hint line under the prompt.",
       "default": true
     },
+    "promptCoil": {
+      "type": "boolean",
+      "title": "Shenron around the prompt",
+      "description": "Shenron lies along the top of the band above the prompt (your Dragon Balls glow in his body) and his tail curls along the hint line under it. His scales shine while Claude works.",
+      "default": true
+    },
     "shenronAnimation": {
       "type": "boolean",
       "title": "Shenron animation",

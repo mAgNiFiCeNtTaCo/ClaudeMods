@@ -60,7 +60,7 @@ ZENI        $1.24 · $0.31/attack · this session
 look; see the Color schemes list in the top-level README). The shenron mod's `/dbztheme` sets it on all
 DBZ mods at once.
 
-**`[ Hide (back: /gauges) ]`** hides the band. **`/gauges`** brings it back (and hides it again); it also comes back on your next prompt and in every new session. The engine's own `[-]` (or ctrl+x ctrl+a) collapses it too. The band gives way to Claude Code's surveys.
+**`[ Hide (back: /gauges) ]`** hides the band. **`/gauges`** brings it back (and hides it again); it also comes back on your next prompt and in every new session. The engine's own `[-]` (or ctrl+x ctrl+a) collapses it too. The band gives way to Claude Code's surveys. Another mod's band (the shenron mod's dragon) stays, drawn above the gauges.
 
 ## Settings (`userConfig`, all on by default except `zeniBudget` and `palette`)
 

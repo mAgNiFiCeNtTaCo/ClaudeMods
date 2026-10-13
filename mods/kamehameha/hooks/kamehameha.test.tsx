@@ -31,6 +31,8 @@ function engine(on: On) {
   on('session.usage', () => ({ value: USAGE }))
   on('session.measure', ($, e) => ({ changed: e.changed }))
   on('tool.call', () => ({ deny: 'the test engine runs no tools' }))
+  // The engine's band beneath the plugin: nothing of its own to show.
+  on('ui.render', { component: 'AbovePrompt' }, () => ({ type: 'Box', props: {}, children: [] }) as any)
 }
 
 async function mountAll($: any, isWorking: boolean) {
@@ -213,4 +215,19 @@ test('Hide takes the band away until the next turn', async ($, on) => {
   expect(await desktop!.find({ type: 'Text', text: 'KI' })).toBeUndefined()
   await $.turn.start({ text: 'again', turnId: 't3' })
   expect(await terminal!.find({ type: 'Text', text: /^Ka\.\.\./ })).toBeDefined()
+})
+
+test('a band beneath (Shenron coiled above the prompt) stays, drawn above the gauges', async ($, on) => {
+  // Registered first, so it answers before the engine's empty band.
+  on('ui.render', { component: 'AbovePrompt' }, () => ({
+    type: 'Box',
+    props: {},
+    children: [{ type: 'Text', props: {}, children: ['DRAGON ROW'] }],
+  }) as any)
+  engine(on)
+  mock.clock(on, { now: 1_000_000 })
+  for (const ui of await mountAll($, false)) {
+    expect(await ui.find({ type: 'Text', text: 'DRAGON ROW' })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: 'KI' })).toBeDefined()
+  }
 })

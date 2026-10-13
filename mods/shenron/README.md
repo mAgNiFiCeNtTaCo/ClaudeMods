@@ -38,6 +38,16 @@ After each tool call of the main conversation (subagents don't count), the mod r
 - The stars you hold, your lifetime finds, the wishes granted and the secret schemes you unlocked all
   carry over to later sessions. A ball that is out does not.
 
+### Shenron around the prompt
+- Shenron lies along the top of the band above the prompt, over kamehameha's gauges: tail at the left,
+  your seven Dragon Balls glowing orange in his body (empty slots `○`), his head and antlers at the right.
+  A ball that is out sits in his mouth until you `/grab` it. His tail curls on along the hint line under
+  the prompt (`╰≈≈≈∽ 🐉 ●●○○○○○`).
+- His scales shine while Claude works; idle, he rests still. A band shorter than 14 rows (fullscreen)
+  gets him on one row, without the antlers. Below 24 columns, and while a survey holds the band, he steps aside.
+- Claude Code lets no mod draw on the terminal's own edges, so this is as close to the window border as a
+  mod gets. Turn it off with `promptCoil`.
+
 ### Shenron
 The 7th ball summons him: `The sky darkens... SHENRON HAS BEEN SUMMONED!`, and a dialog pane opens.
 Shenron's body wraps around all four edges of the pane:
@@ -89,6 +99,7 @@ get a toast such as `Transformed! Color scheme: Super Saiyan Blue`.
 | `palette` | `goku` | DBZ color scheme for this mod's panes (also set by `/dbztheme`). Shenron's own body always stays dragon green. |
 | `findRate` | `normal` | `rare`, `normal` or `frequent` (see the table above). |
 | `ballEscape` | on | An ungrabbed ball flies away after 90 seconds. Off: it waits until you grab it. |
+| `promptCoil` | on | Shenron along the top of the band above the prompt and his tail on the hint line. |
 | `hintTail` | on | Show `🐉 ●●●●○○○` at the end of the hint line under the prompt. |
 | `shenronAnimation` | on | Shimmering scales, a glowing and blinking eye, a twinkling sky (about 3 frames a second, only while Shenron's pane is open). |
 

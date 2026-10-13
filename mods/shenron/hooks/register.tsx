@@ -4,9 +4,12 @@ import type { ConfigRow, EngineInterface, Register, Timer } from 'claude-code'
 import type { ShenronBall, ShenronStats, ShenronSummon } from '../types'
 import {
   BALL,
+  COIL_COLUMNS,
+  COIL_TAIL,
   STARS,
   ballStars,
   center,
+  coilRows,
   dotBar,
   dragonFrame,
   frameHeight,
@@ -36,6 +39,10 @@ const TIP_FAREWELL_MS = 9000
 const DEFER_MS = 150
 /** Shenron's shimmer and blink: a little over 3 frames a second. */
 const ANIM_MS = 300
+/** The prompt coil's shine while Claude works. */
+const COIL_MS = 250
+/** Below this many band rows the coil keeps to one row (no spines or antlers). */
+const COIL_TALL_ROWS = 14
 
 /** What the summon pane asks for: inline rows, docked columns. */
 const SUMMON_COLUMNS = 66
@@ -94,6 +101,8 @@ type Cfg = {
   escape: boolean
   hintTail: boolean
   animate: boolean
+  /** Shenron coiled over the band above the prompt, his tail on the hint line. */
+  coil: boolean
 }
 
 const NO_STATS: ShenronStats = { finds: 0, wishes: 0, unlocked: [] }
@@ -104,10 +113,12 @@ const ball = atom({ plugin: 'shenron', key: 'ball' } as const, null)
 const sinceFind = atom({ plugin: 'shenron', key: 'sinceFind' } as const, 0)
 const summonState = atom({ plugin: 'shenron', key: 'summon' } as const, null)
 const tick = atom({ plugin: 'shenron', key: 'tick' } as const, 0)
+const coilTick = atom({ plugin: 'shenron', key: 'coilTick' } as const, -1)
 
 // Module-level on purpose: a reload re-runs the module and drops these with the timers they guard.
 let readying: Promise<void> | null = null
 let animation: Timer | null = null
+let coiling: Timer | null = null
 /** SHENRON_RNG (tests): a comma list of numbers the rolls take in turn; null when unset. */
 let script: number[] | null | undefined
 let scriptAt = 0
@@ -286,6 +297,24 @@ async function summon($: EngineInterface, cfg: Cfg, mode: ShenronSummon['mode'])
 function startAnimation($: EngineInterface): void {
   if (animation !== null) return
   animation = $.clock.every(ANIM_MS, () => void animate($))
+}
+
+function startCoil($: EngineInterface): void {
+  if (coiling !== null) return
+  coiling = $.clock.every(COIL_MS, () => void update($, coilTick, n => n + 1))
+}
+
+async function stopCoil($: EngineInterface): Promise<void> {
+  coiling?.cancel()
+  coiling = null
+  await update($, coilTick, () => -1)
+}
+
+/** What a band hook beneath answered with nothing to show: no tree, or a Box with no children. */
+function isEmptyTree(tree: unknown): boolean {
+  if (tree === null || tree === undefined || tree === false) return true
+  const t = tree as { type?: string; children?: unknown }
+  return t.type === 'Box' && (!Array.isArray(t.children) || t.children.length === 0)
 }
 
 function stopAnimation(): void {
@@ -531,11 +560,13 @@ export const register: Register = (on, options) => {
     escape: options.ballEscape !== false,
     hintTail: options.hintTail !== false,
     animate: options.shenronAnimation !== false,
+    coil: options.promptCoil !== false,
   }
   readying = null
   script = undefined
   scriptAt = 0
   animation = null
+  coiling = null
 
   on('session.start', async ($, e, next) => {
     await ready($)
@@ -545,8 +576,16 @@ export const register: Register = (on, options) => {
   // A reload (a /dbztheme switch) drops this module's commands' backing: re-register on the next prompt.
   on('turn.start', async ($, e, next) => {
     await ready($)
+    if (cfg.coil && cfg.animate) startCoil($)
     return next(e)
   })
+
+  // The coil's shine runs only while Claude works; idle, he rests still.
+  on('turn.complete', async ($, e, next) => {
+    const done = await next(e)
+    await stopCoil($)
+    return done
+  }).catch(($, e, next) => next(e))
 
   on('tool.call', async ($, e, next) => {
     const ran = await next(e)
@@ -607,8 +646,33 @@ export const register: Register = (on, options) => {
     on('ui.render', { component: 'PromptHint' }, async ($, e, next) => {
       const [have, out] = await Promise.all([read($, held), read($, ball)])
       const extra = out !== null ? ' ✨ /grab' : have.length >= STARS ? ' /shenron' : ''
-      const mine = `🐉 ${dotBar(have.length)}${extra}`
+      const mine = `${cfg.coil ? `${COIL_TAIL} ` : ''}🐉 ${dotBar(have.length)}${extra}`
       return next({ ...e, props: { ...e.props, tail: e.props.tail ? `${e.props.tail}  ${mine}` : `  ${mine}` } })
+    })
+  }
+
+  // ------------------------------------------------------------ the coil above the prompt
+  // Shenron lies along the top of the band, over whatever band is beneath (the kamehameha gauges).
+  if (cfg.coil) {
+    on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+      if (e.props.hasSurvey || e.props.bodyColumns < COIL_COLUMNS) return next(e)
+      const [below, have, out, shine] = await Promise.all([next(e), read($, held), read($, ball), read($, coilTick)])
+      const { Box, Text } = $.ui.resolve(e)
+      const rows = coilRows(e.props.bodyColumns, shine, have, out !== null, e.props.maxRows >= COIL_TALL_ROWS)
+      return (
+        <Box flexDirection="column">
+          {rows.map((segs, r) => (
+            <Box key={`coil${r}`} flexDirection="row">
+              {segs.map(seg => (
+                <Text color={seg.color} bold={seg.bold}>
+                  {seg.text}
+                </Text>
+              ))}
+            </Box>
+          ))}
+          {!isEmptyTree(below) && below}
+        </Box>
+      )
     })
   }
 

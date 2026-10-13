@@ -45,6 +45,8 @@ declare module 'claude-code' {
       summon: ShenronSummon | null
       /** Animation frame of the summon pane. */
       tick: number
+      /** Shine position of the prompt coil while Claude works; -1 at rest. */
+      coilTick: number
     }
   }
 }

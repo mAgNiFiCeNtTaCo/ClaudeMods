@@ -1,7 +1,7 @@
 import { describe, expect, mock, test } from 'claude-code/testing'
 import type { On } from 'claude-code'
 
-import { dragonFrame, frameText } from './art'
+import { COIL_COLUMNS, coilRows, dragonFrame, frameText } from './art'
 
 const SURFACES = ['terminal', 'desktop'] as const
 const NOW = Date.parse('2026-10-13T15:00:00Z')
@@ -221,7 +221,7 @@ describe('finding Dragon Balls', () => {
         component: 'PromptHint',
         props: { isDraft: false, isWorking: false, hint: '? for shortcuts', tail: '  ⚡ KI ▰▰▱ 63%' },
       })
-      expect(await ui.find({ type: 'Text', text: '? for shortcuts|  ⚡ KI ▰▰▱ 63%  🐉 ●●○○○○○' })).toBeDefined()
+      expect(await ui.find({ type: 'Text', text: '? for shortcuts|  ⚡ KI ▰▰▱ 63%  ╰≈≈≈∽ 🐉 ●●○○○○○' })).toBeDefined()
       await ui.unmount()
     }
   })
@@ -492,5 +492,99 @@ describe('the coil art', () => {
         }
       }
     }
+  })
+})
+
+describe('the coil above the prompt', () => {
+  const BAND = (bodyColumns = 110, maxRows = 20) =>
+    ({ hasSurvey: false, isWorking: false, maxRows, bodyColumns, scroll: { offset: 0, bodyRows: maxRows - 1 }, view: {} }) as const
+  const mountBand = ($: any, surface: 'terminal' | 'desktop', bodyColumns?: number, maxRows?: number) =>
+    $.ui.mount({ plugin: 'shenron', surface, component: 'AbovePrompt', props: BAND(bodyColumns, maxRows) })
+  const textOf = (rows: ReturnType<typeof coilRows>) => rows.map(r => r.map(s => s.text).join(''))
+
+  test('the art: exact width, the seven slots, head and antlers, the ball he found', () => {
+    for (const width of [COIL_COLUMNS, 60, 110, 150]) {
+      const tall = textOf(coilRows(width, -1, [1, 4], false, true))
+      expect(tall).toHaveLength(2)
+      for (const row of tall) expect(Array.from(row)).toHaveLength(width)
+      expect(tall[0]).toContain('╲│╱╲│╱')
+      expect(tall[1]!.startsWith('∽≈≈')).toBe(true)
+      expect(tall[1]).toContain('◉██▙▶∾')
+      expect(Array.from(tall[1]!).filter(c => c === '●')).toHaveLength(2)
+      expect(Array.from(tall[1]!).filter(c => c === '○')).toHaveLength(5)
+    }
+    const low = textOf(coilRows(80, 3, [], true, false))
+    expect(low).toHaveLength(1)
+    expect(low[0]).toContain('▶●')
+    // The shine moves: two ticks give different colors along the body.
+    const colors = (t: number) => coilRows(80, t, [], false, false)[0]!.map(s => `${s.color}:${s.text}`).join('|')
+    expect(colors(0)).not.toBe(colors(5))
+  })
+
+  test('he lies over the band beneath and keeps it', async ($, on) => {
+    world(on, { stars: [2, 5] })
+    on('ui.render', { component: 'AbovePrompt' }, ($, e) => {
+      const { Box, Text } = $.ui.resolve(e)
+      return (
+        <Box flexDirection="column">
+          <Text>GAUGES</Text>
+        </Box>
+      )
+    })
+    await $.session.start(START)
+    for (const surface of SURFACES) {
+      const ui = await mountBand($, surface)
+      expect(await ui.find({ type: 'Text', text: /◉/ })).toBeDefined()
+      expect(await ui.find({ type: 'Text', text: /╲│╱╲│╱/ })).toBeDefined()
+      expect(await ui.find({ type: 'Text', text: 'GAUGES' })).toBeDefined()
+      await ui.unmount()
+      // A short band keeps him to one row, no antlers.
+      const short = await mountBand($, surface, 110, 8)
+      expect(await short.find({ type: 'Text', text: /◉/ })).toBeDefined()
+      expect(await short.find({ type: 'Text', text: /╲│╱/ })).toBeUndefined()
+      await short.unmount()
+    }
+  })
+
+  test('off, too narrow, or under a survey: no coil', { options: { promptCoil: false } }, async ($, on) => {
+    world(on)
+    on('ui.render', { component: 'AbovePrompt' }, () => ({ type: 'Box', props: {}, children: [] }) as any)
+    on('ui.render', { component: 'PromptHint' }, ($, e) => {
+      const { Text } = $.ui.resolve(e)
+      return <Text dimColor>{`${e.props.hint}|${e.props.tail ?? ''}`}</Text>
+    })
+    await $.session.start(START)
+    const ui = await mountBand($, 'terminal')
+    expect(await ui.find({ type: 'Text', text: /◉/ })).toBeUndefined()
+    const hint = await $.ui.mount({
+      plugin: 'shenron',
+      surface: 'terminal',
+      component: 'PromptHint',
+      props: { isDraft: false, isWorking: false, hint: '? for shortcuts' },
+    })
+    expect(await hint.find({ type: 'Text', text: '? for shortcuts|  🐉 ○○○○○○○' })).toBeDefined()
+  })
+
+  test('too narrow: the band beneath alone', async ($, on) => {
+    world(on)
+    on('ui.render', { component: 'AbovePrompt' }, () => ({ type: 'Box', props: {}, children: [] }) as any)
+    await $.session.start(START)
+    const ui = await mountBand($, 'terminal', COIL_COLUMNS - 1)
+    expect(await ui.find({ type: 'Text', text: /◉/ })).toBeUndefined()
+  })
+
+  test('his scales shine while Claude works and rest after', async ($, on) => {
+    const w = world(on)
+    on('ui.render', { component: 'AbovePrompt' }, () => ({ type: 'Box', props: {}, children: [] }) as any)
+    on('turn.complete', ($, e) => ({ text: e.answer }))
+    await $.session.start(START)
+    const ui = await mountBand($, 'terminal')
+    const shining = async () => (await ui.findAll({ type: 'Text' })).some((t: any) => t.props.color === '#a6ffcb')
+    expect(await shining()).toBe(false)
+    await $.turn.start({ text: 'go', turnId: 't1' } as never)
+    await w.clock.advance(1000)
+    expect(await shining()).toBe(true)
+    await $.turn.complete({ answer: 'done', durationMs: 1000, isAborted: false, turnId: 't1', reason: 'answer' } as never)
+    expect(await shining()).toBe(false)
   })
 })

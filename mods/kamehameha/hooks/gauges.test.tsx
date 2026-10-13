@@ -33,6 +33,8 @@ function engine(on: On, rateLimits: unknown[] = [], cost?: { usd: number }) {
   on('turn.complete', ($, e) => ({ text: e.answer }))
   on('session.usage', () => ({ value: { startedAt: 0, context: CONTEXT, rateLimits, ...(cost ? { cost } : {}) } }))
   on('session.measure', ($, e) => ({ changed: e.changed }))
+  // The engine's band beneath the plugin: nothing of its own to show.
+  on('ui.render', { component: 'AbovePrompt' }, () => ({ type: 'Box', props: {}, children: [] }) as any)
 }
 
 const mountAll = ($: any) => Promise.all(SURFACES.map(surface => $.ui.mount({ ...BAND, surface })))

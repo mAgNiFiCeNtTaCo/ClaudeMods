@@ -6,7 +6,7 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 
 ## Where it stands (2026-10-13)
 - Four mods in `mods/`, each passes `claude plugin validate` and `claude plugin test`:
-  kamehameha 18 tests, scouter 9, saiyan-status 14, shenron 23.
+  kamehameha 19 tests, scouter 9, saiyan-status 14, shenron 28.
 - Try them: `try-mods.cmd` (all four) or `try-mods.cmd <mod>`; nothing is installed.
 - Checked live on 2026-10-13: a fresh `try-mods.cmd` session drew the gauges (KI, STAMINA 5h, TRAINING 7d,
   ZENI, `[ Hide (back: /gauges) ]`), the saiyan status line and the mini bars on the prompt-hint line.
@@ -44,6 +44,13 @@ Dragon Balls, all sharing 10 color schemes. Built to try out before installing.
 - **Fix:** `/grab` did nothing while Claude was working: a mod's slash command waits for the turn to end
   unless registered with `immediate: true`. Now set on `/grab`, `/dragonradar`, `/gauges`, `/scouter`
   (not `/shenron` or `/dbztheme`: wishes compact and theme switches reload mods).
+- **Shenron around the prompt** (user asked for a dragon around the terminal border): mods can't draw on
+  the terminal's own edges (only the band above the prompt, the hint line, panes, status line). So Shenron
+  now lies along the top of the band above the prompt (his body holds the 7 Dragon Ball slots, a found
+  ball sits in his mouth, scales shine while Claude works) and his tail `╰≈≈≈∽` runs on the hint line.
+  Toggle `promptCoil` (on). Kamehameha now keeps another mod's band beneath it and draws it above the
+  gauges, so the two stack whichever runs first. Seen live in a fresh `try-mods.cmd` session.
+  Tests: kamehameha 19, shenron 28.
 - **Decided against:** custom Claude Code themes (not possible through plugins); Dragon Ball pop-up pane
   below 144 columns (the engine won't seat an unasked pane there, so a toast + `/grab` is used).
 - **Next / open:** user tries every feature live and picks which mods to keep; then maybe install via a

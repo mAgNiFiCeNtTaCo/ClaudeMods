@@ -25,6 +25,8 @@ const CONTEXT = { window: 200000, tokens: 126000, percent: 63 }
 function engine(on: On) {
   on('session.usage', () => ({ value: { startedAt: 0, context: CONTEXT, rateLimits: [] } }))
   on('session.measure', ($, e) => ({ changed: e.changed }))
+  // The engine's band beneath the plugin: nothing of its own to show.
+  on('ui.render', { component: 'AbovePrompt' }, () => ({ type: 'Box', props: {}, children: [] }) as any)
 }
 
 const mountAll = ($: any) => Promise.all(SURFACES.map(surface => $.ui.mount({ ...BAND, surface })))

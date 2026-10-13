@@ -491,8 +491,12 @@ export const register: Register = (on, options) => {
 
     if (lines.length === 0) return next(e)
 
+    // Another mod's band beneath (Shenron's coil) stays, drawn above the gauges.
+    const below = await next(e)
+
     return (
       <Box flexDirection="column">
+        {!isEmptyTree(below) && below}
         {lines.map((parts, i) => (
           <Box key={`line${i}`} flexDirection="row">
             {parts}
@@ -505,4 +509,11 @@ export const register: Register = (on, options) => {
       </Box>
     )
   })
+}
+
+/** What a band hook beneath answered with nothing to show: no tree, or a Box with no children. */
+function isEmptyTree(tree: unknown): boolean {
+  if (tree === null || tree === undefined || tree === false) return true
+  const t = tree as { type?: string; children?: unknown }
+  return t.type === 'Box' && (!Array.isArray(t.children) || t.children.length === 0)
 }
